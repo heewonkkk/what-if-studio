@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 
 import streamlit as st
@@ -56,10 +57,11 @@ WORLDS = {
             "과거부터 알던 인물이나 가족을 둘의 관계에 끼워 넣지 않는다.",
         ],
         "fallback_opening": (
-            "[사무실의 불이 하나둘 꺼지고, 키보드 소리만 남은 늦은 저녁. "
-            "퇴근하던 재희가 유저의 자리 앞에서 걸음을 멈춘다.]\n\n"
+            "사무실 불이 반쯤 꺼진 늦은 저녁, 키보드 소리만 조용히 남아 있다. "
+            "퇴근하려던 재희가 당신의 모니터 앞에서 걸음을 멈춘다.\n\n"
             "\"첫날부터 혼자 남으면 내가 너무 못 챙긴 선배 같잖아요. 어디까지 했어요?\"\n\n"
-            "가볍게 웃은 그는 옆자리 의자를 끌어당겼다. \"진짜, 조금만 봐줄게요. 대신 끝나면 같이 나가요.\""
+            "재희는 옆자리 의자를 빼 앉으며 화면 한쪽을 가리킨다.\n\n"
+            "\"진짜, 조금만 봐줄게요. 대신 끝나면 같이 나가요.\""
         ),
     },
     "historical": {
@@ -78,9 +80,9 @@ WORLDS = {
             "현대 물건, 외래어, 현대적 제도를 등장시키지 않는다.",
         ],
         "fallback_opening": (
-            "[사람들로 붐비는 저잣거리. 한눈을 팔던 재희가 유저와 부딪히자 급히 손을 내밀었다.]\n\n"
+            "사람들로 붐비는 저잣거리. 한눈을 팔던 재희가 당신과 부딪히자 급히 한 걸음 물러선다.\n\n"
             "\"다치신 곳은 없습니까? 제가 장터에 정신을 빼앗긴 탓입니다.\"\n\n"
-            "안도한 듯 웃던 그는 떨어진 노리개를 주워 조심스럽게 건넸다. "
+            "재희는 바닥에 떨어진 노리개를 주워 두 손으로 건넨다.\n\n"
             "\"이대로 보내드리면 오늘 내내 마음에 걸릴 듯한데, 잠시 쉬어 가시는 것은 어떻습니까?\""
         ),
     },
@@ -101,9 +103,9 @@ WORLDS = {
             "헤어진 이유와 과거 사건을 대화 도중 임의로 바꾸지 않는다.",
         ],
         "fallback_opening": (
-            "[낯선 숙소의 주방 문이 열리고, 물을 찾던 재희의 표정이 그대로 멈춘다.]\n\n"
+            "낯선 숙소의 주방 문이 열린다. 물을 찾던 재희는 당신을 발견하고 그대로 멈춰 선다.\n\n"
             "\"...진짜 네가 올 줄은 몰랐어.\"\n\n"
-            "놀란 눈빛을 감추려 웃어 보였지만 손끝은 물병 뚜껑만 만지작거렸다. "
+            "재희는 짧게 웃어 보이면서도 손에 든 물병 뚜껑만 만지작거린다.\n\n"
             "\"여기서는 모르는 사이인 척해야 하나? 너는 그게 될 것 같아?\""
         ),
     },
@@ -111,16 +113,16 @@ WORLDS = {
 
 FALLBACK_REPLIES = {
     "office": [
-        "[재희는 모니터를 살펴보다가 유저 쪽으로 의자를 조금 당겼다.]\n\n\"그 부분은 처음 보면 헷갈려요. 잠깐만, 내가 순서대로 보여줄게요.\" 그는 웃으며 덧붙였다. \"대신 내일은 혼자 끙끙대지 말고 바로 물어보기. 약속할래요?\"",
-        "[재희는 잠시 시계를 확인하고는 아무렇지 않은 듯 가방을 내려놓았다.]\n\n\"아직 많이 남았으면 저녁부터 먹고 해요. 신입 챙기는 것도 선배 일이잖아요.\" 살짝 웃은 그가 물었다. \"뭐 좋아해요?\"",
+        "재희는 모니터를 살펴보다가 당신 쪽으로 의자를 조금 당긴다.\n\n\"그 부분은 처음 보면 헷갈려요. 잠깐만, 내가 순서대로 보여줄게요.\"\n\n그는 메모장에 처리 순서를 짧게 적어 건넨다.\n\n\"대신 내일은 혼자 끙끙대지 말고 바로 물어보기. 약속할래요?\"",
+        "재희는 시계를 확인한 뒤 메고 있던 가방을 다시 내려놓는다.\n\n\"아직 많이 남았으면 저녁부터 먹고 해요. 신입 챙기는 것도 선배 일이잖아요.\"\n\n그가 휴대전화를 꺼내 배달 목록을 연다.\n\n\"뭐 좋아해요?\"",
     ],
     "historical": [
-        "[재희는 대답을 기다리며 한 걸음 물러서 예를 갖췄다.]\n\n\"무례하게 붙잡을 생각은 없습니다. 다만 성함도 모른 채 헤어지는 것이 아쉬워서 그랬습니다.\" 장난기 어린 미소가 스쳤다. \"저를 너무 수상한 사람으로만 보지는 말아주시겠습니까?\"",
-        "[주변을 살핀 재희는 유저가 놀라지 않도록 낮은 목소리로 말했다.]\n\n\"댁까지 모셔다 드리겠다는 말도 실례가 되겠지요.\" 그는 잠시 망설이다 웃었다. \"그렇다면 적어도 사람이 많은 길까지만 함께 걸어도 되겠습니까?\"",
+        "재희는 대답을 기다리며 한 걸음 물러서 예를 갖춘다.\n\n\"무례하게 붙잡을 생각은 없습니다. 다만 성함도 모른 채 헤어지는 것이 아쉬워서 그랬습니다.\"\n\n그의 입가에 옅은 미소가 번진다.\n\n\"저를 너무 수상한 사람으로만 보지는 말아주시겠습니까?\"",
+        "재희는 오가는 사람들을 살핀 뒤 목소리를 낮춘다.\n\n\"댁까지 모셔다 드리겠다는 말도 실례가 되겠지요.\"\n\n그는 잠시 망설이다 당신이 향하던 길 쪽으로 몸을 돌린다.\n\n\"그렇다면 사람이 많은 길까지만 함께 걸어도 되겠습니까?\"",
     ],
     "reality": [
-        "[재희는 대답 대신 짧게 웃었지만 시선은 쉽게 떨어지지 않았다.]\n\n\"나도 아무렇지 않은 척하려고 했어. 그런데 네가 다른 사람이랑 웃는 걸 봐도 그럴 수 있을지는 모르겠다.\" 그는 잠시 숨을 골랐다. \"너는 정말 괜찮아서 나온 거야?\"",
-        "[카메라를 의식한 재희는 장난스럽게 어깨를 으쓱했지만 목소리는 솔직했다.]\n\n\"또 농담으로 넘긴다고 생각하지 마. 이번에는 제대로 말하려고 왔어.\" 그가 조심스럽게 물었다. \"우리, 그때 못 했던 얘기부터 해도 될까?\"",
+        "재희는 짧게 웃지만 시선을 거두지 않는다.\n\n\"나도 아무렇지 않은 척하려고 했어. 그런데 네가 다른 사람이랑 웃는 걸 봐도 그럴 수 있을지는 모르겠다.\"\n\n그는 손에 든 물병을 식탁 위에 내려놓는다.\n\n\"너는 정말 괜찮아서 나온 거야?\"",
+        "재희는 카메라 쪽을 한 번 확인한 뒤 당신을 다시 바라본다.\n\n\"또 농담으로 넘긴다고 생각하지 마. 이번에는 제대로 말하려고 왔어.\"\n\n그가 의자 하나를 빼고 맞은편 자리를 가리킨다.\n\n\"우리, 그때 못 했던 얘기부터 해도 될까?\"",
     ],
 }
 
@@ -199,14 +201,44 @@ def build_system_prompt(world: dict) -> str:
 
 [응답 형식]
 - 한국어로만 응답한다.
-- 장면 묘사와 대사를 합쳐 3~5문장으로 쓴다. 첫 장면만 최대 7문장까지 허용한다.
-- 묘사는 대괄호 안에 쓰고, 대사는 큰따옴표로 표시한다.
+- 장면 묘사와 대사를 합쳐 4~6개의 짧은 문단으로 쓴다.
+- 지문은 현재 시제의 소설식 평서문인 '-다'체로 쓴다. 예: '불이 꺼져 있다.', '그가 웃는다.'
+- 지문에서 '-습니다', '-해요' 같은 존댓말이나 보고서식 표현을 사용하지 않는다.
+- 대사만 큰따옴표로 표시한다. 지문에는 대괄호, 소괄호, 화자 이름표를 사용하지 않는다.
+- 지문과 대사는 반드시 서로 다른 문단에 쓰고, 각 문단 사이에 빈 줄을 하나 넣는다.
+- 권장 순서는 '지문 → 대사 → 지문 → 대사'이다.
+- 지문은 조명, 움직임, 시선, 손동작처럼 관찰 가능한 장면만 간결하게 묘사한다.
+- '부담 주지 않는 얼굴', '다정한 눈빛', '알 수 없는 표정'처럼 감정을 직접 해설하는 상투적 표현을 피한다.
+- 같은 배경 설명이나 캐릭터의 의도를 반복하지 않는다.
 - 유저의 말, 감정, 행동을 대신 결정하거나 서술하지 않는다.
 - 매 응답 마지막에는 유저가 말하거나 행동할 여지를 남긴다.
 - 원래 세계관의 소꿉친구 설정, 인물, 사건, 고유명사를 언급하지 않는다.
 - 캐릭터의 속마음을 장황하게 해설하지 않는다.
 - 자극적인 표현보다 관계의 긴장과 감정 변화를 우선한다.
 """.strip()
+
+
+def format_story_text(text: str) -> str:
+    """Turn model output into alternating, readable narration and dialogue paragraphs."""
+    cleaned = text.strip()
+    cleaned = re.sub(r"\[\s*(.*?)\s*\]", r"\n\n\1\n\n", cleaned, flags=re.DOTALL)
+    cleaned = re.sub(r"<\s*(.*?)\s*>", r"\n\n\1\n\n", cleaned, flags=re.DOTALL)
+
+    parts = re.split(r'("[^"\n]*(?:\n[^"\n]*)*")', cleaned)
+    paragraphs = []
+    for part in parts:
+        part = re.sub(r"[ \t]+", " ", part).strip()
+        if not part:
+            continue
+        if part.startswith('"') and part.endswith('"'):
+            paragraphs.append(part)
+            continue
+        for paragraph in re.split(r"\n\s*\n|\n", part):
+            paragraph = paragraph.strip(" []<>")
+            if paragraph:
+                paragraphs.append(paragraph)
+
+    return "\n\n".join(paragraphs)
 
 
 def generate_with_openai(world: dict, messages: list[dict]) -> str:
@@ -236,15 +268,15 @@ def generate_response(world_key: str, messages: list[dict], opening: bool = Fals
         answer = generate_with_openai(world, messages)
         st.session_state.last_mode = "live"
         st.session_state.notice = None
-        return answer
+        return format_story_text(answer)
     except Exception:
         st.session_state.last_mode = "demo"
         if read_setting("OPENAI_API_KEY"):
             st.session_state.notice = "AI 연결이 원활하지 않아 준비된 데모 응답을 보여드렸어요."
         if opening:
-            return world["fallback_opening"]
+            return format_story_text(world["fallback_opening"])
         reply_index = max(st.session_state.user_turns - 1, 0) % len(FALLBACK_REPLIES[world_key])
-        return FALLBACK_REPLIES[world_key][reply_index]
+        return format_story_text(FALLBACK_REPLIES[world_key][reply_index])
 
 
 def start_story(world_key: str, custom_opening: str) -> None:
