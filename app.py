@@ -316,20 +316,18 @@ def apply_styles() -> None:
             border-radius: 6px;
             padding: 0.75rem;
         }
-        .stButton > button, .stFormSubmitButton > button {
+        .stButton button, .stFormSubmitButton button {
+            background: #ff4fa3 !important;
+            color: #ffffff !important;
             border-radius: 6px;
-            border: 1px solid #ff70b7;
+            border: 1px solid #ff70b7 !important;
             min-height: 2.8rem;
             font-weight: 700;
         }
-        .stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
-            background: #ff4fa3;
-            color: white;
-        }
-        .stButton > button[kind="primary"]:hover,
-        .stFormSubmitButton > button[kind="primary"]:hover {
-            background: #ff70b7;
-            border-color: #ff8ac5;
+        .stButton button:hover, .stFormSubmitButton button:hover {
+            background: #ff70b7 !important;
+            border-color: #ff8ac5 !important;
+            color: #ffffff !important;
         }
         a { color: #ff70b7 !important; }
         .stTextArea textarea, .stTextInput input {
