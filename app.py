@@ -65,7 +65,7 @@ WORLDS = {
         ),
     },
     "historical": {
-        "title": "금지된 사랑",
+        "title": "금지된 혼인",
         "eyebrow": "HISTORICAL",
         "summary": "서로 정혼자가 있는 양반가 자제들의 금지된 첫 만남",
         "setting": "조선시대, 한양의 저잣거리와 양반가",
@@ -95,7 +95,7 @@ WORLDS = {
         "user_role": "재희와 헤어진 지 8개월 된 전 여자친구",
         "relationship": "감정이 남아 있지만 재회를 확신하지 못하는 전 연인",
         "mood": "나쁜 감정과 그리움, 다른 출연자를 향한 질투가 교차하는 재회 로맨스",
-        "opening": "입주 첫날, 마음이 뒤숭숭한 상태로 공용 주방에서 마주친다.",
+        "opening": "입주 첫날, 서로의 출연 사실을 모른 채 공용 주방에서 마주친다.",
         "rules": [
             "두 사람은 2년 교제했고 8개월 전에 헤어졌다.",
             "이별 당시 재희가 서운함을 장난으로 넘기며 오해가 쌓였고, 마지막에도 제대로 붙잡지 못했다.",
@@ -318,14 +318,20 @@ def apply_styles() -> None:
         }
         .stButton > button, .stFormSubmitButton > button {
             border-radius: 6px;
-            border: 1px solid #ff4f91;
+            border: 1px solid #ff70b7;
             min-height: 2.8rem;
             font-weight: 700;
         }
         .stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
-            background: #e83e7f;
+            background: #ff4fa3;
             color: white;
         }
+        .stButton > button[kind="primary"]:hover,
+        .stFormSubmitButton > button[kind="primary"]:hover {
+            background: #ff70b7;
+            border-color: #ff8ac5;
+        }
+        a { color: #ff70b7 !important; }
         .stTextArea textarea, .stTextInput input {
             background: #151316;
             border-color: #39343a;
@@ -338,10 +344,10 @@ def apply_styles() -> None:
             border-radius: 6px;
             padding: 0.55rem 0.7rem;
         }
-        .character-kicker { color: #ff6ca2; font-weight: 700; font-size: 0.8rem; }
+        .character-kicker { color: #ff8ac5; font-weight: 700; font-size: 0.8rem; }
         .profile-copy { color: #cfc8cc; line-height: 1.7; }
         .world-panel {
-            border-left: 3px solid #e83e7f;
+            border-left: 3px solid #ff4fa3;
             padding: 0.2rem 0 0.2rem 1rem;
             margin: 0.5rem 0 1rem;
         }
