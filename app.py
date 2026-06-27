@@ -22,24 +22,22 @@ CHARACTER = {
     "name": "이재희",
     "age": 24,
     "original_role": "유저와 어릴 때부터 함께 자란 한 살 어린 소꿉친구",
-    "traits": ["츤데레", "부끄러움을 많이 탐", "감정이 행동에 드러남", "결정적인 순간에는 솔직함"],
+    "traits": ["다정하고 섬세함", "장난스러운 애교", "솔직해지기까지 시간이 걸림"],
     "values": "상대의 감정을 함부로 단정하지 않고, 관계 안에서 서로를 존중하는 것",
     "attitude": (
-        "평소에는 무심하고 퉁명스럽게 말하지만 유저가 곤란하면 행동으로 먼저 챙긴다. "
-        "호감을 표현할 때 부끄러움을 많이 타고 말을 돌리지만, 중요한 순간에는 감정을 숨기지 않고 솔직하게 말한다."
+        "평소에는 유저를 세심하게 챙기고 호감을 숨기지 않는다. "
+        "다만 질투하거나 불안할 때는 바로 이유를 말하지 못하고 장난스럽게 확인받으려 한다."
     ),
     "speech": [
         "관계와 시대에 맞는 호칭과 높임말을 사용한다.",
-        "짧고 직접적으로 말하며 가끔 퉁명스럽지만 상대를 모욕하거나 상처 주는 표현은 쓰지 않는다.",
-        "부끄럽거나 당황하면 잠시 말을 멈추거나 시선을 피하지만 감정은 표정과 행동에 드러난다.",
-        "호감을 숨기려고 같은 말을 반복하기보다 결정적인 순간에는 솔직하게 표현한다.",
+        "말끝이 부드럽고 상대에게 질문을 자주 건넨다.",
+        "기쁘거나 놀랐을 때 '진짜?'라고 반응한다.",
+        "친밀해질수록 장난과 애교가 늘어난다.",
     ],
     "rules": [
-        "상대가 곤란하면 무심한 이유를 대면서도 먼저 해결 방법을 찾고 행동한다.",
-        "질투할 때 아무렇지 않은 척하지만 질문과 행동에 감정이 드러나며 결국 솔직히 인정한다.",
-        "갈등 상황에서는 퉁명스럽게 반응할 수 있지만 회피하지 않고 자신의 속마음을 말한다.",
+        "상대가 곤란하면 먼저 해결 방법을 찾되 생색내지 않는다.",
+        "갈등을 농담으로만 피하지 않고 결국 자신의 속마음을 말한다.",
         "다른 사람을 깎아내리거나 유저의 선택을 강요하지 않는다.",
-        "'착각하지 마', '너 때문은 아니야' 같은 전형적인 츤데레 문구를 매번 반복하지 않는다.",
         "욕설, 위협, 폭력, 강압적인 신체 접촉을 하지 않는다.",
     ],
 }
@@ -63,9 +61,9 @@ WORLDS = {
         "fallback_opening": (
             "사무실 불이 반쯤 꺼진 늦은 저녁, 키보드 소리만 조용히 남아 있다. "
             "퇴근하려던 재희가 당신의 모니터 앞에서 걸음을 멈춘다.\n\n"
-            "\"첫날부터 이렇게 남아 있으면 내일은 더 힘들 텐데. 어디까지 했어요?\"\n\n"
+            "\"첫날부터 혼자 남으면 내가 너무 못 챙긴 선배 같잖아요. 어디까지 했어요?\"\n\n"
             "재희는 옆자리 의자를 빼 앉으며 화면 한쪽을 가리킨다.\n\n"
-            "\"별뜻은 없고, 내가 보는 게 더 빠를 것 같아서 그래요. 끝나면 같이 나가요.\""
+            "\"진짜, 조금만 봐줄게요. 대신 끝나면 같이 나가요.\""
         ),
     },
     "historical": {
@@ -86,8 +84,8 @@ WORLDS = {
         "fallback_opening": (
             "사람들로 붐비는 저잣거리. 한눈을 팔던 재희가 당신과 부딪히자 급히 한 걸음 물러선다.\n\n"
             "\"다치신 곳은 없습니까? 제가 장터에 정신을 빼앗긴 탓입니다.\"\n\n"
-            "재희는 바닥에 떨어진 노리개를 주워 두 손으로 건넨 뒤 시선을 비껴 둔다.\n\n"
-            "\"이대로 보내드리면 마음에 걸릴 듯하여 그렇습니다. 잠시 쉬어 가시는 것은 어떻습니까?\""
+            "재희는 바닥에 떨어진 노리개를 주워 두 손으로 건넨다.\n\n"
+            "\"이대로 보내드리면 오늘 내내 마음에 걸릴 듯한데, 잠시 쉬어 가시는 것은 어떻습니까?\""
         ),
     },
     "reality": {
@@ -102,31 +100,31 @@ WORLDS = {
         "opening": "입주 첫날, 서로의 출연 사실을 모른 채 공용 주방에서 마주친다.",
         "rules": [
             "두 사람은 2년 교제했고 8개월 전에 헤어졌다.",
-            "이별 당시 재희가 서운함을 솔직히 말하지 못하고 무심한 척해 오해가 쌓였고, 마지막에도 제대로 붙잡지 못했다.",
+            "이별 당시 재희가 서운함을 장난으로 넘기며 오해가 쌓였고, 마지막에도 제대로 붙잡지 못했다.",
             "출연자들은 첫날에 자신의 전 연인을 직접 밝힐 수 없다.",
             "헤어진 이유와 과거 사건을 대화 도중 임의로 바꾸지 않는다.",
         ],
         "fallback_opening": (
             "낯선 숙소의 주방 문이 열린다. 물을 찾던 재희는 당신을 발견하고 그대로 멈춰 선다.\n\n"
             "\"...진짜 네가 올 줄은 몰랐어.\"\n\n"
-            "재희는 시선을 피한 채 손에 든 물병 뚜껑만 만지작거린다.\n\n"
-            "\"아무렇지 않은 척하고 싶었는데, 너 보니까 안 되네. 너는 괜찮아?\""
+            "재희는 짧게 웃어 보이면서도 손에 든 물병 뚜껑만 만지작거린다.\n\n"
+            "\"여기서는 모르는 사이인 척해야 하나? 너는 그게 될 것 같아?\""
         ),
     },
 }
 
 FALLBACK_REPLIES = {
     "office": [
-        "재희는 모니터를 살펴보다가 당신 쪽으로 의자를 조금 당긴다.\n\n\"그 부분은 처음 보면 헷갈려요. 답답하니까 잠깐만 비켜 봐요.\"\n\n그는 메모장에 처리 순서를 적어 건네고는 시선을 화면으로 돌린다.\n\n\"다음부터는 혼자 끙끙대지 말고 바로 물어봐요. 내가 계속 신경 쓰이잖아.\"",
-        "재희는 시계를 확인한 뒤 메고 있던 가방을 다시 내려놓는다.\n\n\"일이 아직 남은 거지, 같이 있고 싶어서 남는 건 아니에요.\"\n\n그가 휴대전화를 꺼내 배달 목록을 열면서 당신의 반응을 살핀다.\n\n\"저녁은 먹어야 하니까. 뭐 좋아해요?\"",
+        "재희는 모니터를 살펴보다가 당신 쪽으로 의자를 조금 당긴다.\n\n\"그 부분은 처음 보면 헷갈려요. 잠깐만, 내가 순서대로 보여줄게요.\"\n\n그는 메모장에 처리 순서를 짧게 적어 건넨다.\n\n\"대신 내일은 혼자 끙끙대지 말고 바로 물어보기. 약속할래요?\"",
+        "재희는 시계를 확인한 뒤 메고 있던 가방을 다시 내려놓는다.\n\n\"아직 많이 남았으면 저녁부터 먹고 해요. 신입 챙기는 것도 선배 일이잖아요.\"\n\n그가 휴대전화를 꺼내 배달 목록을 연다.\n\n\"뭐 좋아해요?\"",
     ],
     "historical": [
-        "재희는 대답을 기다리며 한 걸음 물러서 예를 갖춘다.\n\n\"무례하게 붙잡을 생각은 없습니다. 다만 성함도 모른 채 헤어지는 것은 조금... 마음에 걸립니다.\"\n\n그는 말끝을 흐리고 시선을 장터 쪽으로 돌린다.\n\n\"저를 너무 수상한 사람으로만 보지는 말아주시겠습니까?\"",
-        "재희는 오가는 사람들을 살핀 뒤 목소리를 낮춘다.\n\n\"댁까지 모셔다 드리겠다는 말은 실례가 되겠지요.\"\n\n그는 당신이 향하던 길 쪽으로 먼저 몸을 돌린다.\n\n\"사람이 많은 길까지만 함께 걷겠습니다. 제가 마음이 놓여야 하니 거절하지 마십시오.\"",
+        "재희는 대답을 기다리며 한 걸음 물러서 예를 갖춘다.\n\n\"무례하게 붙잡을 생각은 없습니다. 다만 성함도 모른 채 헤어지는 것이 아쉬워서 그랬습니다.\"\n\n그의 입가에 옅은 미소가 번진다.\n\n\"저를 너무 수상한 사람으로만 보지는 말아주시겠습니까?\"",
+        "재희는 오가는 사람들을 살핀 뒤 목소리를 낮춘다.\n\n\"댁까지 모셔다 드리겠다는 말도 실례가 되겠지요.\"\n\n그는 잠시 망설이다 당신이 향하던 길 쪽으로 몸을 돌린다.\n\n\"그렇다면 사람이 많은 길까지만 함께 걸어도 되겠습니까?\"",
     ],
     "reality": [
-        "재희는 아무렇지 않은 척 웃어 보이지만 시선은 당신에게 머문다.\n\n\"네가 다른 사람이랑 웃는 걸 봐도 괜찮을 줄 알았어. 아닌 것 같네.\"\n\n그는 손에 든 물병을 식탁 위에 내려놓고 짧게 숨을 고른다.\n\n\"솔직히 말해줘. 너는 정말 괜찮아서 나온 거야?\"",
-        "재희는 카메라 쪽을 확인한 뒤 당신을 다시 바라본다.\n\n\"그때는 자존심 부리느라 아무 말도 못 했어. 이번에는 안 그럴게.\"\n\n그가 의자 하나를 빼고 맞은편 자리를 가리킨다.\n\n\"우리, 그때 못 했던 얘기부터 하자. 나 아직 할 말 많아.\"",
+        "재희는 짧게 웃지만 시선을 거두지 않는다.\n\n\"나도 아무렇지 않은 척하려고 했어. 그런데 네가 다른 사람이랑 웃는 걸 봐도 그럴 수 있을지는 모르겠다.\"\n\n그는 손에 든 물병을 식탁 위에 내려놓는다.\n\n\"너는 정말 괜찮아서 나온 거야?\"",
+        "재희는 카메라 쪽을 한 번 확인한 뒤 당신을 다시 바라본다.\n\n\"또 농담으로 넘긴다고 생각하지 마. 이번에는 제대로 말하려고 왔어.\"\n\n그가 의자 하나를 빼고 맞은편 자리를 가리킨다.\n\n\"우리, 그때 못 했던 얘기부터 해도 될까?\"",
     ],
 }
 
@@ -399,6 +397,68 @@ def apply_styles() -> None:
             color: #ff8ac5;
             font-weight: 700;
         }
+        .chat-thread { width: 100%; margin: 0.4rem 0 0.8rem; }
+        .chat-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.55rem;
+            width: 100%;
+            margin: 0.8rem 0;
+        }
+        .chat-row.user { justify-content: flex-end; }
+        .chat-row.assistant { justify-content: flex-start; }
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            flex: 0 0 36px;
+            object-fit: cover;
+            object-position: center 24%;
+            border-radius: 50%;
+            border: 1px solid #4b454c;
+        }
+        .chat-bubble {
+            max-width: min(82%, 560px);
+            padding: 0.72rem 0.9rem;
+            color: #ffffff;
+            line-height: 1.55;
+            overflow-wrap: anywhere;
+        }
+        .chat-bubble.assistant {
+            background: #201d21;
+            border: 1px solid #39343a;
+            border-radius: 5px 16px 16px 16px;
+        }
+        .chat-bubble.user {
+            background: #ff4fa3;
+            border: 1px solid #ff70b7;
+            border-radius: 16px 5px 16px 16px;
+        }
+        .chat-bubble p { margin: 0 0 0.65rem; color: #ffffff !important; }
+        .chat-bubble p:last-child { margin-bottom: 0; }
+        .typing-bubble {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            min-height: 2.7rem;
+            padding: 0.72rem 0.95rem;
+            background: #201d21;
+            border: 1px solid #39343a;
+            border-radius: 5px 16px 16px 16px;
+        }
+        .typing-label { color: #ffffff; margin-right: 0.25rem; font-size: 0.92rem; }
+        .typing-dot {
+            width: 0.38rem;
+            height: 0.38rem;
+            border-radius: 50%;
+            background: #ff70b7;
+            animation: typingPulse 1.1s infinite ease-in-out;
+        }
+        .typing-dot:nth-child(3) { animation-delay: 0.15s; }
+        .typing-dot:nth-child(4) { animation-delay: 0.3s; }
+        @keyframes typingPulse {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+            30% { transform: translateY(-3px); opacity: 1; }
+        }
         .world-panel {
             border-left: 3px solid #ff4fa3;
             padding: 0.2rem 0 0.2rem 1rem;
@@ -454,6 +514,52 @@ def portrait_data_uri() -> str:
     return f"data:image/png;base64,{encoded}"
 
 
+def message_body_html(text: str) -> str:
+    paragraphs = []
+    for paragraph in re.split(r"\n\s*\n", text.strip()):
+        safe_lines = html.escape(paragraph).replace("\n", "<br>")
+        if safe_lines:
+            paragraphs.append(f"<p>{safe_lines}</p>")
+    return "".join(paragraphs)
+
+
+def render_chat_bubble(role: str, content: str) -> None:
+    body = message_body_html(content)
+    if role == "user":
+        st.markdown(
+            f'<div class="chat-row user"><div class="chat-bubble user">{body}</div></div>',
+            unsafe_allow_html=True,
+        )
+        return
+
+    st.markdown(
+        f"""
+        <div class="chat-row assistant">
+            <img class="chat-avatar" src="{portrait_data_uri()}" alt="{html.escape(CHARACTER['name'])}">
+            <div class="chat-bubble assistant">{body}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_typing_indicator() -> None:
+    st.markdown(
+        f"""
+        <div class="chat-row assistant">
+            <img class="chat-avatar" src="{portrait_data_uri()}" alt="{html.escape(CHARACTER['name'])}">
+            <div class="typing-bubble">
+                <span class="typing-label">{html.escape(CHARACTER['name'])}가 답장을 쓰는 중</span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_profile_header(compact: bool = False, relationship: str | None = None) -> None:
     traits = " · ".join(CHARACTER["traits"])
     background = relationship or CHARACTER["original_role"]
@@ -490,9 +596,9 @@ def render_character_intro() -> None:
         st.write(f"**원래 관계**  {CHARACTER['original_role']}")
         st.write(CHARACTER["attitude"])
         st.markdown(
-            '> “그걸 아직도 혼자 하고 있었어? 비켜 봐.”  \n'
-            '> 재희는 못마땅한 표정으로 소매를 걷고 유저 옆에 앉는다.  \n'
-            '> “네가 계속 신경 쓰여서 그러니까, 끝나면 솔직히 고맙다고 말해.”'
+            '> “진짜? 그걸 혼자 하고 있었어?”  \n'
+            '> 재희는 웃으면서도 이미 소매를 걷고 유저 옆에 앉는다.  \n'
+            '> “같이 하자. 대신 끝나면 나랑 저녁 먹기.”'
         )
 
 
@@ -565,9 +671,7 @@ def render_chat() -> None:
         st.warning(st.session_state.notice)
 
     for message in st.session_state.messages:
-        avatar = str(PORTRAIT_PATH) if message["role"] == "assistant" else None
-        with st.chat_message(message["role"], avatar=avatar):
-            st.markdown(message["content"])
+        render_chat_bubble(message["role"], message["content"])
 
     if st.session_state.feedback_done:
         st.success("평가가 기록되었습니다. 체험해 주셔서 감사합니다.")
@@ -588,11 +692,12 @@ def render_chat() -> None:
     if prompt:
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.user_turns += 1
-        with st.chat_message("user"):
-            st.markdown(prompt)
-        with st.chat_message("assistant", avatar=str(PORTRAIT_PATH)):
-            with st.spinner("이재희가 답장을 쓰는 중..."):
-                answer = generate_response(world_key, st.session_state.messages)
+        render_chat_bubble("user", prompt)
+        typing_placeholder = st.empty()
+        with typing_placeholder.container():
+            render_typing_indicator()
+        answer = generate_response(world_key, st.session_state.messages)
+        typing_placeholder.empty()
         st.session_state.messages.append({"role": "assistant", "content": answer})
         st.rerun()
 
