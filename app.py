@@ -65,9 +65,9 @@ WORLDS = {
         ),
     },
     "historical": {
-        "title": "금지된 혼인",
+        "title": "금지된 사랑",
         "eyebrow": "HISTORICAL",
-        "summary": "서로 정혼자가 있는 양반가 자제들의 금지된 첫 만남",
+        "summary": "서로 정혼자가 있는 양반가 자제들의 금지된 사랑",
         "setting": "조선시대, 한양의 저잣거리와 양반가",
         "character_role": "과거에 장원급제한 양반가의 자제",
         "user_role": "집안에서 정해준 혼인을 앞둔 양반가의 규수",
