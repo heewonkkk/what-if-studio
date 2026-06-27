@@ -2,8 +2,8 @@
 
 캐릭터의 핵심 성격은 유지하면서, 서로 다른 세계관과 관계에서 새로운 이야기를 시작하는 AI 인터랙티브 콘텐츠 PoC입니다.
 
-- [PoC 직접 체험하기](Streamlit URL)
-- [기획 문서](Notion URL)
+- [PoC 직접 체험하기] https://what-if-studio-mt4nbeehyryrwcqnuqhgck.streamlit.app/
+- [기획 문서] https://app.notion.com/p/Tain-AI-AI-Native-PM-38b19a8f738d802eb37bf376b3fa885d
 
 ## 기획 배경
 
