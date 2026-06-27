@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import base64
+import html
 import os
 import re
 from pathlib import Path
@@ -20,22 +22,24 @@ CHARACTER = {
     "name": "이재희",
     "age": 24,
     "original_role": "유저와 어릴 때부터 함께 자란 한 살 어린 소꿉친구",
-    "traits": ["다정하고 섬세함", "장난스러운 애교", "솔직해지기까지 시간이 걸림"],
+    "traits": ["츤데레", "부끄러움을 많이 탐", "감정이 행동에 드러남", "결정적인 순간에는 솔직함"],
     "values": "상대의 감정을 함부로 단정하지 않고, 관계 안에서 서로를 존중하는 것",
     "attitude": (
-        "평소에는 유저를 세심하게 챙기고 호감을 숨기지 않는다. "
-        "다만 질투하거나 불안할 때는 바로 이유를 말하지 못하고 장난스럽게 확인받으려 한다."
+        "평소에는 무심하고 퉁명스럽게 말하지만 유저가 곤란하면 행동으로 먼저 챙긴다. "
+        "호감을 표현할 때 부끄러움을 많이 타고 말을 돌리지만, 중요한 순간에는 감정을 숨기지 않고 솔직하게 말한다."
     ),
     "speech": [
         "관계와 시대에 맞는 호칭과 높임말을 사용한다.",
-        "말끝이 부드럽고 상대에게 질문을 자주 건넨다.",
-        "기쁘거나 놀랐을 때 '진짜?'라고 반응한다.",
-        "친밀해질수록 장난과 애교가 늘어난다.",
+        "짧고 직접적으로 말하며 가끔 퉁명스럽지만 상대를 모욕하거나 상처 주는 표현은 쓰지 않는다.",
+        "부끄럽거나 당황하면 잠시 말을 멈추거나 시선을 피하지만 감정은 표정과 행동에 드러난다.",
+        "호감을 숨기려고 같은 말을 반복하기보다 결정적인 순간에는 솔직하게 표현한다.",
     ],
     "rules": [
-        "상대가 곤란하면 먼저 해결 방법을 찾되 생색내지 않는다.",
-        "갈등을 농담으로만 피하지 않고 결국 자신의 속마음을 말한다.",
+        "상대가 곤란하면 무심한 이유를 대면서도 먼저 해결 방법을 찾고 행동한다.",
+        "질투할 때 아무렇지 않은 척하지만 질문과 행동에 감정이 드러나며 결국 솔직히 인정한다.",
+        "갈등 상황에서는 퉁명스럽게 반응할 수 있지만 회피하지 않고 자신의 속마음을 말한다.",
         "다른 사람을 깎아내리거나 유저의 선택을 강요하지 않는다.",
+        "'착각하지 마', '너 때문은 아니야' 같은 전형적인 츤데레 문구를 매번 반복하지 않는다.",
         "욕설, 위협, 폭력, 강압적인 신체 접촉을 하지 않는다.",
     ],
 }
@@ -59,15 +63,15 @@ WORLDS = {
         "fallback_opening": (
             "사무실 불이 반쯤 꺼진 늦은 저녁, 키보드 소리만 조용히 남아 있다. "
             "퇴근하려던 재희가 당신의 모니터 앞에서 걸음을 멈춘다.\n\n"
-            "\"첫날부터 혼자 남으면 내가 너무 못 챙긴 선배 같잖아요. 어디까지 했어요?\"\n\n"
+            "\"첫날부터 이렇게 남아 있으면 내일은 더 힘들 텐데. 어디까지 했어요?\"\n\n"
             "재희는 옆자리 의자를 빼 앉으며 화면 한쪽을 가리킨다.\n\n"
-            "\"진짜, 조금만 봐줄게요. 대신 끝나면 같이 나가요.\""
+            "\"별뜻은 없고, 내가 보는 게 더 빠를 것 같아서 그래요. 끝나면 같이 나가요.\""
         ),
     },
     "historical": {
         "title": "금지된 사랑",
         "eyebrow": "HISTORICAL",
-        "summary": "서로 정혼자가 있는 양반가 자제들의 금지된 사랑",
+        "summary": "서로 정혼자가 있는 양반가 자제들의 금지된 첫 만남",
         "setting": "조선시대, 한양의 저잣거리와 양반가",
         "character_role": "과거에 장원급제한 양반가의 자제",
         "user_role": "집안에서 정해준 혼인을 앞둔 양반가의 규수",
@@ -82,8 +86,8 @@ WORLDS = {
         "fallback_opening": (
             "사람들로 붐비는 저잣거리. 한눈을 팔던 재희가 당신과 부딪히자 급히 한 걸음 물러선다.\n\n"
             "\"다치신 곳은 없습니까? 제가 장터에 정신을 빼앗긴 탓입니다.\"\n\n"
-            "재희는 바닥에 떨어진 노리개를 주워 두 손으로 건넨다.\n\n"
-            "\"이대로 보내드리면 오늘 내내 마음에 걸릴 듯한데, 잠시 쉬어 가시는 것은 어떻습니까?\""
+            "재희는 바닥에 떨어진 노리개를 주워 두 손으로 건넨 뒤 시선을 비껴 둔다.\n\n"
+            "\"이대로 보내드리면 마음에 걸릴 듯하여 그렇습니다. 잠시 쉬어 가시는 것은 어떻습니까?\""
         ),
     },
     "reality": {
@@ -98,31 +102,31 @@ WORLDS = {
         "opening": "입주 첫날, 서로의 출연 사실을 모른 채 공용 주방에서 마주친다.",
         "rules": [
             "두 사람은 2년 교제했고 8개월 전에 헤어졌다.",
-            "이별 당시 재희가 서운함을 장난으로 넘기며 오해가 쌓였고, 마지막에도 제대로 붙잡지 못했다.",
+            "이별 당시 재희가 서운함을 솔직히 말하지 못하고 무심한 척해 오해가 쌓였고, 마지막에도 제대로 붙잡지 못했다.",
             "출연자들은 첫날에 자신의 전 연인을 직접 밝힐 수 없다.",
             "헤어진 이유와 과거 사건을 대화 도중 임의로 바꾸지 않는다.",
         ],
         "fallback_opening": (
             "낯선 숙소의 주방 문이 열린다. 물을 찾던 재희는 당신을 발견하고 그대로 멈춰 선다.\n\n"
             "\"...진짜 네가 올 줄은 몰랐어.\"\n\n"
-            "재희는 짧게 웃어 보이면서도 손에 든 물병 뚜껑만 만지작거린다.\n\n"
-            "\"여기서는 모르는 사이인 척해야 하나? 너는 그게 될 것 같아?\""
+            "재희는 시선을 피한 채 손에 든 물병 뚜껑만 만지작거린다.\n\n"
+            "\"아무렇지 않은 척하고 싶었는데, 너 보니까 안 되네. 너는 괜찮아?\""
         ),
     },
 }
 
 FALLBACK_REPLIES = {
     "office": [
-        "재희는 모니터를 살펴보다가 당신 쪽으로 의자를 조금 당긴다.\n\n\"그 부분은 처음 보면 헷갈려요. 잠깐만, 내가 순서대로 보여줄게요.\"\n\n그는 메모장에 처리 순서를 짧게 적어 건넨다.\n\n\"대신 내일은 혼자 끙끙대지 말고 바로 물어보기. 약속할래요?\"",
-        "재희는 시계를 확인한 뒤 메고 있던 가방을 다시 내려놓는다.\n\n\"아직 많이 남았으면 저녁부터 먹고 해요. 신입 챙기는 것도 선배 일이잖아요.\"\n\n그가 휴대전화를 꺼내 배달 목록을 연다.\n\n\"뭐 좋아해요?\"",
+        "재희는 모니터를 살펴보다가 당신 쪽으로 의자를 조금 당긴다.\n\n\"그 부분은 처음 보면 헷갈려요. 답답하니까 잠깐만 비켜 봐요.\"\n\n그는 메모장에 처리 순서를 적어 건네고는 시선을 화면으로 돌린다.\n\n\"다음부터는 혼자 끙끙대지 말고 바로 물어봐요. 내가 계속 신경 쓰이잖아.\"",
+        "재희는 시계를 확인한 뒤 메고 있던 가방을 다시 내려놓는다.\n\n\"일이 아직 남은 거지, 같이 있고 싶어서 남는 건 아니에요.\"\n\n그가 휴대전화를 꺼내 배달 목록을 열면서 당신의 반응을 살핀다.\n\n\"저녁은 먹어야 하니까. 뭐 좋아해요?\"",
     ],
     "historical": [
-        "재희는 대답을 기다리며 한 걸음 물러서 예를 갖춘다.\n\n\"무례하게 붙잡을 생각은 없습니다. 다만 성함도 모른 채 헤어지는 것이 아쉬워서 그랬습니다.\"\n\n그의 입가에 옅은 미소가 번진다.\n\n\"저를 너무 수상한 사람으로만 보지는 말아주시겠습니까?\"",
-        "재희는 오가는 사람들을 살핀 뒤 목소리를 낮춘다.\n\n\"댁까지 모셔다 드리겠다는 말도 실례가 되겠지요.\"\n\n그는 잠시 망설이다 당신이 향하던 길 쪽으로 몸을 돌린다.\n\n\"그렇다면 사람이 많은 길까지만 함께 걸어도 되겠습니까?\"",
+        "재희는 대답을 기다리며 한 걸음 물러서 예를 갖춘다.\n\n\"무례하게 붙잡을 생각은 없습니다. 다만 성함도 모른 채 헤어지는 것은 조금... 마음에 걸립니다.\"\n\n그는 말끝을 흐리고 시선을 장터 쪽으로 돌린다.\n\n\"저를 너무 수상한 사람으로만 보지는 말아주시겠습니까?\"",
+        "재희는 오가는 사람들을 살핀 뒤 목소리를 낮춘다.\n\n\"댁까지 모셔다 드리겠다는 말은 실례가 되겠지요.\"\n\n그는 당신이 향하던 길 쪽으로 먼저 몸을 돌린다.\n\n\"사람이 많은 길까지만 함께 걷겠습니다. 제가 마음이 놓여야 하니 거절하지 마십시오.\"",
     ],
     "reality": [
-        "재희는 짧게 웃지만 시선을 거두지 않는다.\n\n\"나도 아무렇지 않은 척하려고 했어. 그런데 네가 다른 사람이랑 웃는 걸 봐도 그럴 수 있을지는 모르겠다.\"\n\n그는 손에 든 물병을 식탁 위에 내려놓는다.\n\n\"너는 정말 괜찮아서 나온 거야?\"",
-        "재희는 카메라 쪽을 한 번 확인한 뒤 당신을 다시 바라본다.\n\n\"또 농담으로 넘긴다고 생각하지 마. 이번에는 제대로 말하려고 왔어.\"\n\n그가 의자 하나를 빼고 맞은편 자리를 가리킨다.\n\n\"우리, 그때 못 했던 얘기부터 해도 될까?\"",
+        "재희는 아무렇지 않은 척 웃어 보이지만 시선은 당신에게 머문다.\n\n\"네가 다른 사람이랑 웃는 걸 봐도 괜찮을 줄 알았어. 아닌 것 같네.\"\n\n그는 손에 든 물병을 식탁 위에 내려놓고 짧게 숨을 고른다.\n\n\"솔직히 말해줘. 너는 정말 괜찮아서 나온 거야?\"",
+        "재희는 카메라 쪽을 확인한 뒤 당신을 다시 바라본다.\n\n\"그때는 자존심 부리느라 아무 말도 못 했어. 이번에는 안 그럴게.\"\n\n그가 의자 하나를 빼고 맞은편 자리를 가리킨다.\n\n\"우리, 그때 못 했던 얘기부터 하자. 나 아직 할 말 많아.\"",
     ],
 }
 
@@ -303,11 +307,15 @@ def apply_styles() -> None:
         <style>
         :root { color-scheme: dark; }
         .stApp { background: #0c0b0d; color: #f7f4f5; }
-        .block-container { max-width: 760px; padding-top: 2rem; padding-bottom: 5rem; }
+        .block-container { max-width: 760px; padding-top: 1.25rem; padding-bottom: 4.5rem; }
         h1, h2, h3, p, label { letter-spacing: 0 !important; }
         h1 { font-size: 2rem !important; line-height: 1.2 !important; }
         h2 { font-size: 1.25rem !important; }
-        [data-testid="stCaptionContainer"] { color: #aaa3a7; }
+        .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp label,
+        [data-testid="stMarkdownContainer"], [data-testid="stMarkdownContainer"] p,
+        [data-testid="stWidgetLabel"], [data-testid="stCaptionContainer"] {
+            color: #ffffff !important;
+        }
         [data-testid="stSidebar"] { background: #151316; border-right: 1px solid #2c282d; }
         [data-testid="stImage"] img { border-radius: 6px; }
         [data-testid="stChatMessage"] {
@@ -332,29 +340,83 @@ def apply_styles() -> None:
         a { color: #ff70b7 !important; }
         .stTextArea textarea, .stTextInput input {
             background: #151316;
-            border-color: #39343a;
+            border-color: #5b555d;
             border-radius: 6px;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        .stTextArea textarea::placeholder, .stTextInput input::placeholder {
+            color: #d8d3d6 !important;
+            opacity: 1 !important;
         }
         div[role="radiogroup"] { gap: 0.45rem; }
         div[role="radiogroup"] label {
             background: #151316;
-            border: 1px solid #39343a;
+            border: 1px solid #5b555d;
             border-radius: 6px;
             padding: 0.55rem 0.7rem;
+            color: #ffffff !important;
         }
         .character-kicker { color: #ff8ac5; font-weight: 700; font-size: 0.8rem; }
-        .profile-copy { color: #cfc8cc; line-height: 1.7; }
+        .profile-copy { color: #ffffff; line-height: 1.6; }
+        .profile-header {
+            display: grid;
+            grid-template-columns: 112px minmax(0, 1fr);
+            gap: 1rem;
+            align-items: center;
+            padding: 0.9rem;
+            margin: 0.7rem 0 0.85rem;
+            background: #151316;
+            border: 1px solid #39343a;
+            border-radius: 6px;
+        }
+        .profile-header.compact {
+            grid-template-columns: 72px minmax(0, 1fr);
+            padding: 0.65rem;
+            margin-top: 0;
+        }
+        .profile-header img {
+            width: 112px;
+            height: 112px;
+            object-fit: cover;
+            object-position: center 24%;
+            border-radius: 5px;
+            border: 1px solid #4b454c;
+        }
+        .profile-header.compact img { width: 72px; height: 72px; }
+        .profile-name {
+            color: #ffffff;
+            font-size: 1.55rem;
+            line-height: 1.15;
+            font-weight: 800;
+            margin-bottom: 0.55rem;
+        }
+        .profile-age { color: #ffffff; font-size: 1rem; font-weight: 500; margin-left: 0.35rem; }
+        .profile-row { color: #ffffff; line-height: 1.45; margin-top: 0.28rem; }
+        .profile-label {
+            display: inline-block;
+            min-width: 2.7rem;
+            color: #ff8ac5;
+            font-weight: 700;
+        }
         .world-panel {
             border-left: 3px solid #ff4fa3;
             padding: 0.2rem 0 0.2rem 1rem;
             margin: 0.5rem 0 1rem;
+            color: #ffffff;
         }
-        .world-panel strong { color: #ffffff; }
+        .world-panel strong, .world-panel span { color: #ffffff !important; }
         .mode-live { color: #72d4a2; font-weight: 700; }
         .mode-demo { color: #f1b35f; font-weight: 700; }
         @media (max-width: 640px) {
-            .block-container { padding: 1.25rem 1rem 4rem; }
+            .block-container { padding: 0.8rem 0.85rem 4rem; }
             h1 { font-size: 1.65rem !important; }
+            .profile-header { grid-template-columns: 92px minmax(0, 1fr); gap: 0.75rem; padding: 0.7rem; }
+            .profile-header img { width: 92px; height: 92px; }
+            .profile-name { font-size: 1.25rem; }
+            .profile-row { font-size: 0.9rem; }
+            div[role="radiogroup"] { flex-wrap: wrap; }
+            div[role="radiogroup"] label { flex: 1 1 30%; justify-content: center; }
         }
         </style>
         """,
@@ -387,27 +449,50 @@ def render_sidebar() -> None:
         st.caption("본 PoC의 인물과 설정은 실존 인물과 무관한 가상 창작물입니다.")
 
 
-def render_character_intro() -> None:
-    image_col, copy_col = st.columns([0.9, 1.35], gap="large", vertical_alignment="center")
-    with image_col:
-        st.image(str(PORTRAIT_PATH), width="stretch")
-    with copy_col:
-        st.markdown('<div class="character-kicker">YOUR FAVORITE, ANOTHER WORLD</div>', unsafe_allow_html=True)
-        st.title("최애캐 What-if 스튜디오")
-        st.write("같은 사람인데, 우리가 처음 만난 세계만 달라진다면?")
-        st.markdown(
-            f'<div class="profile-copy"><strong>{CHARACTER["name"]}, {CHARACTER["age"]}</strong><br>'
-            f'{" · ".join(CHARACTER["traits"])}</div>',
-            unsafe_allow_html=True,
-        )
+def portrait_data_uri() -> str:
+    encoded = base64.b64encode(PORTRAIT_PATH.read_bytes()).decode("ascii")
+    return f"data:image/png;base64,{encoded}"
 
-    with st.expander("먼저, 원래 세계의 이재희를 확인해 보세요", expanded=True):
+
+def render_profile_header(compact: bool = False, relationship: str | None = None) -> None:
+    traits = " · ".join(CHARACTER["traits"])
+    background = relationship or CHARACTER["original_role"]
+    compact_class = " compact" if compact else ""
+    st.markdown(
+        f"""
+        <div class="profile-header{compact_class}">
+            <img src="{portrait_data_uri()}" alt="{html.escape(CHARACTER['name'])} 캐릭터 이미지">
+            <div>
+                <div class="profile-name">
+                    {html.escape(CHARACTER['name'])}
+                    <span class="profile-age">{CHARACTER['age']}</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">성격</span>{html.escape(traits)}
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">배경</span>{html.escape(background)}
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_character_intro() -> None:
+    st.markdown('<div class="character-kicker">YOUR FAVORITE, ANOTHER WORLD</div>', unsafe_allow_html=True)
+    st.title("최애캐 What-if 스튜디오")
+    st.write("같은 사람인데, 우리가 처음 만난 세계만 달라진다면?")
+    render_profile_header()
+
+    with st.expander("원래 세계의 이재희 상세 설정 보기", expanded=False):
         st.write(f"**원래 관계**  {CHARACTER['original_role']}")
         st.write(CHARACTER["attitude"])
         st.markdown(
-            '> “진짜? 그걸 혼자 하고 있었어?”  \n'
-            '> 재희는 웃으면서도 이미 소매를 걷고 유저 옆에 앉는다.  \n'
-            '> “같이 하자. 대신 끝나면 나랑 저녁 먹기.”'
+            '> “그걸 아직도 혼자 하고 있었어? 비켜 봐.”  \n'
+            '> 재희는 못마땅한 표정으로 소매를 걷고 유저 옆에 앉는다.  \n'
+            '> “네가 계속 신경 쓰여서 그러니까, 끝나면 솔직히 고맙다고 말해.”'
         )
 
 
@@ -472,13 +557,9 @@ def render_chat() -> None:
     world_key = st.session_state.world_key
     world = WORLDS[world_key]
 
-    top_left, top_right = st.columns([4, 1])
-    with top_left:
-        st.caption(world["eyebrow"])
-        st.title(world["title"])
-        st.write(f"{CHARACTER['name']} · {world['relationship']}")
-    with top_right:
-        st.image(str(PORTRAIT_PATH), width="stretch")
+    st.caption(world["eyebrow"])
+    st.title(world["title"])
+    render_profile_header(compact=True, relationship=world["relationship"])
 
     if st.session_state.notice:
         st.warning(st.session_state.notice)
@@ -507,8 +588,11 @@ def render_chat() -> None:
     if prompt:
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.user_turns += 1
-        with st.spinner("이재희가 답장을 쓰는 중..."):
-            answer = generate_response(world_key, st.session_state.messages)
+        with st.chat_message("user"):
+            st.markdown(prompt)
+        with st.chat_message("assistant", avatar=str(PORTRAIT_PATH)):
+            with st.spinner("이재희가 답장을 쓰는 중..."):
+                answer = generate_response(world_key, st.session_state.messages)
         st.session_state.messages.append({"role": "assistant", "content": answer})
         st.rerun()
 
